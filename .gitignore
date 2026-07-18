@@ -1,0 +1,82 @@
+# IDE
+.vscode/
+
+# 临时搬运目录（本地参考文件）
+cubeide/
+
+# Reference folder - contains external libraries and examples
+Reference/
+
+# STM32CubeIDE
+STM32CubeIDE/.settings/
+STM32CubeIDE/.cproject
+STM32CubeIDE/.project
+STM32CubeIDE/.osx.project
+STM32CubeIDE/Application/
+STM32CubeIDE/STM32F103C8TX_FLASH.ld
+STM32CubeIDE/Debug/
+
+# STM32CubeMX
+.mxproject
+
+# Keil MDK
+*.uvguix.*
+*.uvoptx*
+*.uvproj*
+*.uvplm*
+*.uvpsp*
+*.uvpvs*
+*.uvopt*
+*.uvproj*
+*.mplw*
+*.oj*
+*.p2vp*
+*.p2vw*
+
+# IAR EWARM
+*.ewd
+*.ewp
+*.eww
+*.ewt
+
+# Eclipse
+.settings/
+.project
+*.pydevproject
+
+# C/C++ build files
+*.o
+*.a
+*.so
+*.d
+*.dwo
+*.dwp
+*.lst
+*.map
+*.elf
+*.hex
+*.bin
+*.crf
+*.srec
+
+# Debug files
+*.pdb
+*.elf
+*.exe
+*.dmp
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Temporary files
+*.tmp
+*.bak
+*.orig
+
+# 构建关键文件：必须纳入版本管理
+!/Startup/
+!/Startup/startup_stm32f103c8tx.s
+!/STM32F103C8TX_FLASH.ld

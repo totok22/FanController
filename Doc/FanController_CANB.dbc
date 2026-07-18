@@ -1,0 +1,76 @@
+VERSION "1.0"
+
+NS_ :
+    NS_DESC_
+    CM_
+    BA_DEF_
+    BA_
+    VAL_
+
+BS_:
+
+BU_: FanController ECU
+
+BO_ 1442 FanController_Status: 8 FanController
+ SG_ Fan1_RPM : 7|16@0+ (1,0) [0|65535] "rpm" ECU
+ SG_ Fan2_RPM : 23|16@0+ (1,0) [0|65535] "rpm" ECU
+ SG_ Fan3_RPM : 39|16@0+ (1,0) [0|65535] "rpm" ECU
+ SG_ Fan_PWM1_Duty : 55|8@0+ (1,0) [0|100] "%" ECU
+ SG_ Fan_PWM2_Duty : 63|8@0+ (1,0) [0|100] "%" ECU
+
+BO_ 1443 FanController_Diagnostic: 8 FanController
+ SG_ Fan_Faults : 7|8@0+ (1,0) [0|255] "" ECU
+ SG_ Fan_StatusFlags : 15|8@0+ (1,0) [0|255] "" ECU
+ SG_ MaxMotorTemp : 23|16@0- (0.1,0) [-3276.8|3276.7] "degC" ECU
+ SG_ MaxControllerTemp : 39|16@0- (0.1,0) [-3276.8|3276.7] "degC" ECU
+ SG_ Fan_PWM1_Target : 55|8@0+ (1,0) [0|100] "%" ECU
+ SG_ Fan_PWM2_Target : 63|8@0+ (1,0) [0|100] "%" ECU
+
+BO_ 1444 FanController_Command: 8 ECU
+ SG_ CommandOpcode : 0|8@1+ (1,0) [0|255] "" FanController
+ SG_ CommandSequence : 8|8@1+ (1,0) [0|255] "" FanController
+ SG_ CommandParameter1 : 16|8@1+ (1,0) [0|255] "" FanController
+ SG_ CommandParameter2 : 24|8@1+ (1,0) [0|255] "" FanController
+ SG_ CommandParameter3 : 32|8@1+ (1,0) [0|255] "" FanController
+ SG_ CommandParameter4 : 40|8@1+ (1,0) [0|255] "" FanController
+ SG_ CommandParameter5 : 48|8@1+ (1,0) [0|255] "" FanController
+ SG_ CommandCRC8 : 56|8@1+ (1,0) [0|255] "" FanController
+
+BO_ 1445 FanController_CommandAck: 8 FanController
+ SG_ AckOpcode : 0|8@1+ (1,0) [0|255] "" ECU
+ SG_ AckSequence : 8|8@1+ (1,0) [0|255] "" ECU
+ SG_ AckResult : 16|8@1+ (1,0) [0|255] "" ECU
+ SG_ AckMode : 24|2@1+ (1,0) [0|3] "" ECU
+ SG_ AckFailsafe : 28|2@1+ (1,0) [0|3] "" ECU
+ SG_ AckPWM1Actual : 32|8@1+ (1,0) [0|100] "%" ECU
+ SG_ AckPWM2Actual : 40|8@1+ (1,0) [0|100] "%" ECU
+ SG_ AckPWM1Target : 48|8@1+ (1,0) [0|100] "%" ECU
+ SG_ AckPWM2Target : 56|8@1+ (1,0) [0|100] "%" ECU
+
+BO_ 1446 FanController_CurveStatus: 8 FanController
+ SG_ FanTempOff : 0|8@1+ (1,0) [0|150] "degC" ECU
+ SG_ FanTempOn : 8|8@1+ (1,0) [0|150] "degC" ECU
+ SG_ FanTempFull : 16|8@1+ (1,0) [0|150] "degC" ECU
+ SG_ FanMinDuty : 24|8@1+ (1,0) [0|100] "%" ECU
+ SG_ FanRampUp : 32|8@1+ (1,0) [0|100] "%/s" ECU
+
+BO_ 1447 FanController_FailsafeStatus: 8 FanController
+ SG_ FanFailsafeStrategy : 0|8@1+ (1,0) [0|2] "" ECU
+ SG_ FanFallback1Duty : 8|8@1+ (1,0) [0|100] "%" ECU
+ SG_ FanFallback2Duty : 16|8@1+ (1,0) [0|100] "%" ECU
+ SG_ FanStaleHold : 24|8@1+ (1,0) [0|30] "s" ECU
+ SG_ FanRampDown : 32|8@1+ (1,0) [0|100] "%/s" ECU
+ SG_ FanControlMode : 40|8@1+ (1,0) [0|2] "" ECU
+ SG_ FanControlLeaseRemaining : 48|8@1+ (1,0) [0|60] "s" ECU
+
+CM_ BO_ 1442 "Three measured fan speeds and two fan-side PWM duties.";
+CM_ BO_ 1443 "Fault bits, input freshness, mode, maximum temperatures and target duties.";
+CM_ BO_ 1444 "Remote fan control command. Byte 7 is CRC-8 SAE-J1850 over bytes 0 through 6.";
+CM_ BO_ 1445 "Command acknowledgement and current control state.";
+
+VAL_ 1444 CommandOpcode 1 "SetControl" 2 "SetCurve" 3 "SetFailsafe" 4 "RestoreDefaults" 5 "Query";
+VAL_ 1445 AckResult 0 "OK" 1 "BadCRC" 2 "BadLength" 3 "BadValue" 4 "Unsupported" 5 "LeaseExpired";
+VAL_ 1445 AckMode 0 "Auto" 1 "Manual" 2 "Off";
+VAL_ 1445 AckFailsafe 0 "HoldLast" 1 "Fallback" 2 "Full";
+VAL_ 1447 FanFailsafeStrategy 0 "HoldLast" 1 "Fallback" 2 "Full";
+VAL_ 1447 FanControlMode 0 "Auto" 1 "Manual" 2 "Off";
