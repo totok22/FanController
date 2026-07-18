@@ -19,6 +19,14 @@ STM32CubeIDE/Debug/
 # STM32CubeMX
 .mxproject
 
+# CMake
+/build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+.ninja_*
+
 # Keil MDK
 *.uvguix.*
 *.uvoptx*

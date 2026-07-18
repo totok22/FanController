@@ -2,34 +2,31 @@
 
 ## STM32 扩展
 
-如果要使用 VSCode STM32 扩展自带的配置、编译和调试功能，应在 STM32CubeMX 的 Project Manager 中把 Toolchain/IDE 设为 CMake，再重新生成工程。这样不需要手动维护很长的 `c_cpp_properties.json`、`tasks.json` 或 `launch.json`。
-
-当前 `FanController.ioc` 仍为 STM32CubeIDE 工具链配置，因此本仓库先保留独立 Makefile。后续切换为 CMake 并重新生成代码后，应以 CubeMX 生成的 CMake 配置为准。
+`FanController.ioc` 已使用 CMake 工具链并生成 `CMakeLists.txt`、`CMakePresets.json` 和 `cmake/`。VSCode STM32 扩展可直接使用这些配置，不需要手动维护很长的 `c_cpp_properties.json`、`tasks.json` 或 `launch.json`。
 
 ## 编译
 
-在 VSCode 终端执行：
+确保 `cmake`、`ninja` 和 `arm-none-eabi-*` 工具位于 `PATH`，然后执行：
 
 ```bash
-make -j4
+cmake --preset Debug
+cmake --build --preset Debug
 ```
 
 清理后重新编译：
 
 ```bash
-make clean
-make -j4
+cmake --build --preset Debug --target clean
+cmake --build --preset Debug
 ```
 
 生成文件：
 
-- `Debug/FanController.elf`
-- `Debug/FanController.hex`
-- `Debug/FanController.bin`
-- `Debug/FanController.map`
-
-Makefile 会优先使用 macOS 上的 `/Applications/ArmGNUToolchain/15.2.rel1/arm-none-eabi/bin`；该路径不存在时使用环境变量 `PATH` 中的 `arm-none-eabi-*` 工具。
+- `build/Debug/FanController.elf`
+- `build/Debug/FanController.hex`
+- `build/Debug/FanController.bin`
+- `build/Debug/FanController.map`
 
 ## 修改 CubeMX 配置
 
-用 STM32CubeMX 打开 `FanController.ioc`，修改后重新生成代码。需要 VSCode STM32 扩展完整接管构建时，同时把 Toolchain/IDE 改为 CMake。业务代码放在 `fan_controller.c/.h` 中；生成文件中的自定义代码只放在 `USER CODE BEGIN/END` 区域内。
+用 STM32CubeMX 打开 `FanController.ioc`，保持 Toolchain/IDE 为 CMake，修改后重新生成代码。业务代码放在 `fan_controller.c/.h` 中；生成文件中的自定义代码只放在 `USER CODE BEGIN/END` 区域内。重新生成后还要确认根目录 `CMakeLists.txt` 中仍包含 `fan_controller.c`。

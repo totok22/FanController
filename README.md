@@ -53,10 +53,11 @@ Doc/风扇控制.md               完整控制说明
 
 ## 编译
 
-macOS 下已配置的 Arm GNU Toolchain 可直接使用：
+确保 `cmake`、`ninja` 和 `arm-none-eabi-*` 工具位于 `PATH`，然后执行：
 
 ```bash
-make -j4
+cmake --preset Debug
+cmake --build --preset Debug
 ```
 
-输出文件位于 `Debug/FanController.elf`、`Debug/FanController.hex` 和 `Debug/FanController.bin`。VSCode 使用方式见 [Doc/VSCode编译.md](Doc/VSCode编译.md)。
+输出文件位于 `build/Debug/FanController.elf`、`build/Debug/FanController.hex` 和 `build/Debug/FanController.bin`。VSCode 使用方式见 [Doc/VSCode编译.md](Doc/VSCode编译.md)。
